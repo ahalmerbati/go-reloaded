@@ -1,5 +1,5 @@
 package functions
 
-func Hex() {
+func HexToBin() {
 
 }
