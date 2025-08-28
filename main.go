@@ -6,12 +6,12 @@ import (
 	"os"
 )
 func main() {
-	oldFile := os.Args[1]
-
 	if len(os.Args) != 3 {
 		fmt.Print("Invalid length of arguments")
 		return
 	}
+
+	oldFile := os.Args[1]
 
 	_, err := os.ReadFile(oldFile)
 	if err != nil {
@@ -22,5 +22,7 @@ func main() {
 	content, _ := os.ReadFile(oldFile)
 	oldContent := string(content)
 
-	functions.HexToDec(oldContent)
+	functions.TextEditor(oldContent)
+	// functions.HexToDec(oldContent)
+	fmt.Print(content) 
 }
