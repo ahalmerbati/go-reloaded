@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go-reloaded/functions"
 	"os"
 )
+
 func main() {
 	if len(os.Args) != 3 {
 		fmt.Print("Invalid length of arguments")
@@ -12,6 +12,7 @@ func main() {
 	}
 
 	oldFile := os.Args[1]
+	//newFile := os.Args[2]
 
 	_, err := os.ReadFile(oldFile)
 	if err != nil {
@@ -19,10 +20,5 @@ func main() {
 		return
 	}
 
-	content, _ := os.ReadFile(oldFile)
-	oldContent := string(content)
-
-	functions.TextEditor(oldContent)
-	// functions.HexToDec(oldContent)
-	fmt.Print(content) 
+	
 }
