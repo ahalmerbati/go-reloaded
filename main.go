@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"go-reloaded/functions"
 )
 
 func main() {
@@ -19,6 +20,5 @@ func main() {
 		fmt.Println("Error reading file")
 		return
 	}
-
 	
 }
