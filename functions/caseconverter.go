@@ -11,27 +11,27 @@ func CaseConverter(content, pattern string, converter func(string) string) strin
 	if err != nil {
 		return "The regex pattern is invalid"
 	}
-	
+
 	var result strings.Builder
 	index := 0
 	found := expression.FindAllStringSubmatchIndex(content, -1)
-	
+
 	for _, match := range found {
 		result.WriteString(content[index:match[0]])
-		
+
 		word := content[match[2]:match[3]]
-		
+
 		convertedWord := converter(word)
-		
+
 		result.WriteString(convertedWord)
 		index = match[1]
 	}
 	result.WriteString(content[index:])
-	
+
 	if strings.Contains(result.String(), strings.Split(pattern, `\s*`)[1]) {
 		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
 	}
-	
+
 	return result.String()
 }
 
@@ -49,15 +49,16 @@ func CapitalizedCaseConverter(content string) string {
 
 func capitalize(str string) string {
 	if len(str) == 0 {
+		fmt.Println("Cannot capitalize an empty string")
 		return str
 	}
 	return strings.ToUpper(str[:1])
 }
 
 // func UpperCaseConverter(content string) string {
-	// 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(up\)`)
-	// 	if err != nil {
-		// 		return "The regex pattern is invalid"
+// 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(up\)`)
+// 	if err != nil {
+// 		return "The regex pattern is invalid"
 // 	}
 
 // 	var result strings.Builder
