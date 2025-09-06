@@ -9,7 +9,8 @@ import (
 func CaseConverter(content, pattern string, converter func(string) string) string {
 	expression, err := regexp.Compile(pattern)
 	if err != nil {
-		return "The regex pattern is invalid"
+		fmt.Println("The regex pattern is invalid. The original content is returned.")
+		return content
 	}
 
 	var result strings.Builder
@@ -58,7 +59,8 @@ func capitalize(str string) string {
 // func UpperCaseConverter(content string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(up\)`)
 // 	if err != nil {
-// 		return "The regex pattern is invalid"
+// 		fmt.Println("The regex pattern is invalid. The original content is returned.")
+		// return content
 // 	}
 
 // 	var result strings.Builder
@@ -87,7 +89,8 @@ func capitalize(str string) string {
 // func LowerCaseConverter(content string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(low\)`)
 // 	if err != nil {
-// 		return "The regex pattern is invalid"
+// 		fmt.Println("The regex pattern is invalid. The original content is returned.")
+		// return content
 // 	}
 
 // 	var result strings.Builder
@@ -116,7 +119,8 @@ func capitalize(str string) string {
 // func CapitalizedCaseConverter(content string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(cap\)`)
 // 	if err != nil {
-// 		return "The regex pattern is invalid"
+// 		fmt.Println("The regex pattern is invalid. The original content is returned.")
+		// return content
 // 	}
 
 // 	var result strings.Builder
