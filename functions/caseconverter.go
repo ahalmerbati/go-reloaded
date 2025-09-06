@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"go-reloaded/utils"
 )
 
 func CaseConverter(content, pattern string, converter func(string) string) string {
@@ -51,17 +52,8 @@ func LowerCaseConverter(content string) string {
 }
 
 func CapitalizedCaseConverter(content string) string {
-	return CaseConverter(content, `(\b[a-zA-Z]+\b)\s*\(cap\)`, capitalize)
+	return CaseConverter(content, `(\b[a-zA-Z]+\b)\s*\(cap\)`, utils.Capitalize)
 }
-
-func capitalize(str string) string {
-	if len(str) == 0 {
-		fmt.Println("Cannot capitalize an empty string")
-		return str
-	}
-	return strings.ToUpper(str[:1]) + strings.ToLower(str[1:])
-}
-
 
 // func UpperCaseConverter(content string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(up\)`)
