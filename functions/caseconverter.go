@@ -52,7 +52,7 @@ func capitalize(str string) string {
 		fmt.Println("Cannot capitalize an empty string")
 		return str
 	}
-	return strings.ToUpper(str[:1])
+	return strings.ToUpper(str[:1]) + strings.ToLower(str[1:])
 }
 
 // func UpperCaseConverter(content string) string {
