@@ -17,6 +17,11 @@ func CaseConverter(content, pattern string, converter func(string) string) strin
 	index := 0
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
+	if len(found) == 0 {
+		fmt.Println("No instances of '(up)', '(low)', or '(cap)' found in the content. The original content is returned:")
+		return content
+	}
+
 	for _, match := range found {
 		result.WriteString(content[index:match[0]])
 
@@ -25,6 +30,7 @@ func CaseConverter(content, pattern string, converter func(string) string) strin
 		convertedWord := converter(word)
 
 		result.WriteString(convertedWord)
+
 		index = match[1]
 	}
 	result.WriteString(content[index:])
@@ -56,33 +62,34 @@ func capitalize(str string) string {
 	return strings.ToUpper(str[:1]) + strings.ToLower(str[1:])
 }
 
+
 // func UpperCaseConverter(content string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(up\)`)
 // 	if err != nil {
 // 		fmt.Println("The regex pattern is invalid. The original content is returned.")
-		// return content
+// 		return content
 // 	}
-
+	
 // 	var result strings.Builder
-
+	
 // 	found := expression.FindAllStringSubmatchIndex(content, -1)
 // 	index := 0
-
+	
 // 	for _, match := range found {
 // 		result.WriteString(content[index:match[0]])
-
+		
 // 		capitalizedWord := strings.ToUpper(content[match[2]:match[3]])
-
+		
 // 		result.WriteString(fmt.Sprint(capitalizedWord))
-
+		
 // 		index = match[1]
 // 	}
 // 	result.WriteString(content[index:])
-
+	
 // 	if strings.Contains(result.String(), "(up)") {
 // 		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
 // 	}
-
+	
 // 	return result.String()
 // }
 
@@ -90,29 +97,29 @@ func capitalize(str string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(low\)`)
 // 	if err != nil {
 // 		fmt.Println("The regex pattern is invalid. The original content is returned.")
-		// return content
+// 		return content
 // 	}
-
+	
 // 	var result strings.Builder
 // 	index := 0
-
+	
 // 	found := expression.FindAllStringSubmatchIndex(content, -1)
-
+	
 // 	for _, match := range found {
 // 		result.WriteString(content[index:match[0]])
-
+		
 // 		lowerCaseWord := strings.ToLower(content[match[2]:match[3]])
-
+		
 // 		result.WriteString(fmt.Sprint(lowerCaseWord))
-
+		
 // 		index = match[1]
 // 	}
 // 	result.WriteString(content[index:])
-
+	
 // 	if strings.Contains(result.String(), "(low)") {
 // 		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
 // 	}
-
+	
 // 	return result.String()
 // }
 
@@ -120,31 +127,31 @@ func capitalize(str string) string {
 // 	expression, err := regexp.Compile(`(\b[a-zA-Z]+\b)\s*\(cap\)`)
 // 	if err != nil {
 // 		fmt.Println("The regex pattern is invalid. The original content is returned.")
-		// return content
+// 		return content
 // 	}
-
+	
 // 	var result strings.Builder
 // 	index := 0
-
+	
 // 	found := expression.FindAllStringSubmatchIndex(content, -1)
-
+	
 // 	for _, match := range found {
 // 		result.WriteString(content[index:match[0]])
-
+		
 // 		index2 := match[2]
 // 		capitalizedCase := strings.ToUpper(string(content[index2]))
-
+		
 // 		result.WriteString(fmt.Sprint(capitalizedCase))
-
+		
 // 		result.WriteString(content[index2+1 : match[3]])
-
+		
 // 		index = match[1]
 // 	}
 // 	result.WriteString(content[index:])
-
+	
 // 	if strings.Contains(result.String(), "(cap)") {
 // 		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
 // 	}
-
+	
 // 	return result.String()
 // }

@@ -18,6 +18,11 @@ func ToDec(content, pattern string, base int) string {
 	index := 0
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
+	if len(found) == 0 {
+		fmt.Println("No instances of '(hex)' or '(bin)' found in the content. The original content is returned:")
+		return content
+	}
+
 	for _, match := range found {
 		result.WriteString(content[index:match[0]])
 
