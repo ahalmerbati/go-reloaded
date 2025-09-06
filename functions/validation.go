@@ -19,11 +19,3 @@ func ValidateAlphaNumerical(content string) bool {
 	}
 	return true
 }
-
-func ValidateHex(content string) bool {
-	return false
-}
-
-func ValidateBin(content string) bool {
-	return false
-}

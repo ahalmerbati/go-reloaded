@@ -10,8 +10,7 @@ import (
 func HexToDec(content string) string {
 	expression, err := regexp.Compile(`(\b[0-9a-fA-F]+\b)\s*\(hex\)`)
 	if err != nil {
-		fmt.Print("Invalid regex pattern")
-		return ""
+		return "invalid regex pattern"
 	}
 
 	var result strings.Builder
@@ -31,7 +30,6 @@ func HexToDec(content string) string {
 		decNum, err := strconv.ParseInt(hexNum, 16, 64)
 		if err != nil {
 			result.WriteString(content[match[0]:match[1]])
-			fmt.Print("The hexadecimal number could not be converted to decimal")
 		} else {
 			result.WriteString(fmt.Sprintf("%d", decNum))
 		}
@@ -39,22 +37,9 @@ func HexToDec(content string) string {
 	}
 	result.WriteString(content[index:])
 
+	if strings.Contains(result.String(), "(hex)") {
+		fmt.Println("Some hexadecimal numbers were not fully converted due to invalid input or other ASCII characters.") 
+	}
+
 	return result.String()
 }
-
-// contentCheck := strings.Contains(content, "(hex)")
-
-// if !(contentCheck) {
-// 	return content
-// }
-
-// arr := []rune(content)
-
-// if contentCheck {
-// 	for i := 0; i < len(arr); i++ {
-// 		if string(arr[i:i+5]) == "(hex)" {
-
-// 		}
-// 	}
-// }
-// return string(arr)
