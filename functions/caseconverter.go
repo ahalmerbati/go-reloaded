@@ -36,21 +36,17 @@ func CaseConverter(content, pattern string, converter func(string) string) strin
 	}
 	result.WriteString(content[index:])
 
-	if strings.Contains(result.String(), strings.Split(pattern, `\s*`)[1]) {
-		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
-	}
-
 	return result.String()
 }
 
 func UpperCaseConverter(content string) string {
-	return CaseConverter(content, `(\b[a-zA-Z]+\b)\s*\(up\)`, strings.ToUpper)
+	return CaseConverter(content, `(\b[a-zA-Z]+\b)[\s.,!?:;]*\(up\`, strings.ToUpper)
 }
 
 func LowerCaseConverter(content string) string {
-	return CaseConverter(content, `(\b[a-zA-Z]+\b)\s*\(low\)`, strings.ToLower)
+	return CaseConverter(content, `(\b[a-zA-Z]+\b)[\s.,!?:;]*\(low\)`, strings.ToLower)
 }
 
 func CapitalizedCaseConverter(content string) string {
-	return CaseConverter(content, `(\b[a-zA-Z]+\b)\s*\(cap\)`, utils.Capitalize)
+	return CaseConverter(content, `(\b[a-zA-Z]+\b)[\s.,!?:;]*\(cap\)`, utils.Capitalize)
 }

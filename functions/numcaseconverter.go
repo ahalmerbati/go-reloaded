@@ -9,7 +9,7 @@ import (
 )
 
 func NumberedCaseConverter(content string) string {
-	expression, err := regexp.Compile(`\s*\((up|low|cap),\s*(\d+)\)`)
+	expression, err := regexp.Compile(`[\s.,!?:;]*\((up|low|cap),\s*(\d+)\)`)
 	if err != nil {
 		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
 		return content
