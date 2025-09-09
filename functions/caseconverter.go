@@ -40,7 +40,7 @@ func CaseConverter(content, pattern string, converter func(string) string) strin
 }
 
 func UpperCaseConverter(content string) string {
-	return CaseConverter(content, `(\b[a-zA-Z]+\b)[\s.,!?:;]*\(up\`, strings.ToUpper)
+	return CaseConverter(content, `(\b[a-zA-Z]+\b)[\s.,!?:;]*\(up\)`, strings.ToUpper)
 }
 
 func LowerCaseConverter(content string) string {
