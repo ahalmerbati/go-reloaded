@@ -17,6 +17,11 @@ func Vowels(content string) string {
 	index := 0
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
+	if len(found) == 0 {
+		fmt.Println("No instances of the letter a followed by a word starting with a vowel or h found in the content. The original content is returned:")
+		return content
+	}
+
 	for _, match := range found {
 		result.WriteString(content[index:match[0]])
 
