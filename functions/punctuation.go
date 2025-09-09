@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func Punctuation(content, pattern1, pattern2 string) string {
-	expression, err := regexp.Compile(pattern1)
+func Punctuation(content string) string {
+	expression, err := regexp.Compile(`\s*([.,!?:;]+)\s*`)
 	if err != nil {
 		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
 		return content
@@ -25,29 +25,19 @@ func Punctuation(content, pattern1, pattern2 string) string {
 
 	for _, match := range found {
 		result.WriteString(content[index:match[0]])
+
 		result.WriteString(content[match[2]:match[3]])
-		result.WriteString(" ")
+
+		if match[1] < len(content) {
+			result.WriteString(" ")
+		}
+
 		index = match[1]
 	}
+
 	result.WriteString(content[index:])
 
 	finalString := strings.TrimSpace(result.String())
 
-	expression2, err := regexp.Compile(pattern2)
-	if err != nil {
-		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
-		return content
-	}
-
-	finalString = expression2.ReplaceAllString(finalString, "$1 ")
-
 	return finalString
-}
-
-func SinglePunctuation(content string) string {
-	return Punctuation(content, `\s*([.,!?;:])\s*`, `([.,!?;:])\s+`)
-}
-
-func GroupPunctuation(content string) string {
-	return Punctuation(content, `\s*([.,!?;:]+)\s*`, `([.,!?;:]+)\s+`)
 }
