@@ -3,44 +3,32 @@ package main
 import (
 	"fmt"
 	"go-reloaded/functions"
+	"os"
 )
 
 func main() {
-	testCases := []string{
-		"it (cap) was the best of times, it was the worst of times (up) , it was the age of wisdom, it was the age of foolishness (cap, 6) , it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of darkness, it was the spring of hope, IT WAS THE (low, 3) winter of despair.",
+	if len(os.Args) != 3 {
+		fmt.Println("invalid length of arguments")
+		return
 	}
 
-	for _, tc := range testCases {
-		fmt.Printf("Original: \"%s\"\n", tc)
+	sampleFile := os.Args[1]
+	resultFile := os.Args[2]
 
-		y := functions.UpperCaseConverter(tc)
-		z := functions.LowerCaseConverter(y)
-		r := functions.CapitalizedCaseConverter(z)
-		x := functions.NumberedCaseConverter(r)
-
-		fmt.Printf("Processed: \"%s\"\n\n", x)
+	content, err := os.ReadFile(sampleFile)
+	if err != nil {
+		fmt.Println("Error reading file")
+		return
 	}
+
+	finalContent := functions.ProcessText(string(content))
+
+	err = os.WriteFile(resultFile, []byte(finalContent), 0644)
+	if err != nil {
+		fmt.Println("Error writing to file")
+		return
+	}
+
+	fmt.Println("Successfully proccessed sample.txt and wrote the output to result.txt")
 }
-
-// package main
-
-// import (
-// 	"fmt"
-// 	"os"
-// )
-
-// func main() {
-// 	if len(os.Args) != 3 {
-// 		fmt.Println("invalid length of arguments")
-// 		return
-// 	}
-
-// 	sampleFile := os.Args[1]
-// 	//resultFile := os.Args[2]
-
-// 	_, err := os.ReadFile(oldFile)
-// 	if err != nil {
-// 		fmt.Println("Error reading file")
-// 		return
-// 	}
-// }
+// Ask Ridha where to do the if statment for if its non-ascii characters / non-printables

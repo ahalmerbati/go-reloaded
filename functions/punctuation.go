@@ -7,7 +7,7 @@ import (
 )
 
 func Punctuation(content string) string {
-	expression, err := regexp.Compile(`\s*([.,!?:;]+)\s*`)
+	expression, err := regexp.Compile(`\s*([.,!?:;]+)`)
 	if err != nil {
 		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
 		return content
