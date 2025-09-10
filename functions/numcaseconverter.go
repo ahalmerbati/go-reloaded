@@ -26,7 +26,15 @@ func NumberedCaseConverter(content string) string {
 	}
 
 	for _, match := range found {
-		result.WriteString(content[index:match[0]])
+		precedingContent := content[index:match[0]]
+
+		expression2, err := regexp.Compile(`(\b[a-zA-Z0-9]+\b)`)
+		if err != nil {
+			fmt.Println("There was an error compiling the regular expression. The original content is returned:")
+			return content
+		}
+		words := expression2.FindAllString(precedingContent, -1)
+
 		caseType := content[match[2]:match[3]]
 		numStr := content[match[4]:match[5]]
 
@@ -41,13 +49,15 @@ func NumberedCaseConverter(content string) string {
 			return content
 		}
 
-		var words []string
-		x := utils.ApplyNumCase(words, caseType, count)
+		modifiedWords := utils.ApplyNumCase(words, caseType, count)
 
-		fmt.Print(x)
+		modifiedContent := utils.ReplaceLastWords(precedingContent, modifiedWords, count)
+
+		result.WriteString(modifiedContent)
+
+		index = match[1]
 	}
 	result.WriteString(content[index:])
 
 	return result.String()
 }
-// use FindAllString and then use count based on that to know to writeString up to where
