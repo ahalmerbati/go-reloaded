@@ -31,4 +31,4 @@ func main() {
 
 	fmt.Println("Successfully proccessed sample.txt and wrote the output to result.txt")
 }
-// Ask Ridha where to do the if statment for if its non-ascii characters / non-printables
+// Ask Ridha where to do the if statment for if its non-ascii characters / non-printables also if its too large a number for up

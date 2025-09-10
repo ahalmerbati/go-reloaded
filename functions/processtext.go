@@ -9,8 +9,8 @@ func ProcessText(content string) string {
 	content = UpperCaseConverter(content)
 	content = LowerCaseConverter(content)
 	content = CapitalizedCaseConverter(content)
-	content = Quotation(content)
 	content = Punctuation(content)
+	content = Quotation(content)
 	content = Vowels(content)
 
 	content = strings.TrimSpace(content)
