@@ -3,8 +3,7 @@ package functions
 import "strings"
 
 func ProcessText(content string) string {
-	content = BinToDec(content)
-	content = HexToDec(content)
+	content = ToDec(content)
 	content = NumberedCaseConverter(content)
 	content = CaseConverter(content)
 	content = Punctuation(content)

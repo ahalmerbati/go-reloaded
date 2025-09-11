@@ -7,8 +7,17 @@ import (
 	"strings"
 )
 
-func ToDec(content, pattern string, base int) string {
-	expression, err := regexp.Compile(pattern)
+func ToDec(content string) string {
+	multiCommandExpression, err := regexp.Compile(`\s*\((hex|bin)\)(\s*\((hex|bin)\)){1,}`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return content
+	}
+	if multiCommandExpression.MatchString(content) {
+		fmt.Println("Found multiple commands following a single number. Only the first command will be applied.")
+	}
+
+	expression, err := regexp.Compile(`(\b(?:[0-9a-fA-F]+|[01]+)\b)[\s.,!?:;]*\((hex|bin)\)`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
@@ -26,6 +35,15 @@ func ToDec(content, pattern string, base int) string {
 		result.WriteString(content[index:match[0]])
 
 		oldNum := content[match[2]:match[3]]
+		command := content[match[4]:match[5]]
+
+		var base int
+		switch command {
+		case "hex":
+			base = 16
+		case "bin":
+			base = 2
+		}
 
 		decNum, err := strconv.ParseInt(oldNum, base, 64)
 		if err != nil {
@@ -37,17 +55,5 @@ func ToDec(content, pattern string, base int) string {
 	}
 	result.WriteString(content[index:])
 
-	if strings.Contains(result.String(), strings.Split(pattern, `\s*`)[1]) {
-		fmt.Println("Some words were not fully converted due to invalid input or other ASCII characters.")
-	}
-
 	return result.String()
-}
-
-func HexToDec(content string) string {
-	return ToDec(content, `(\b[0-9a-fA-F]+\b)[\s.,!?:;]*\(hex\)`, 16)
-}
-
-func BinToDec(content string) string {
-	return ToDec(content, `(\b[01]+\b)[\s.,!?:;]*\(bin\)`, 2)
 }
