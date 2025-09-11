@@ -24,6 +24,8 @@ func NumberedCaseConverter(content string) string {
 		return content
 	}
 
+	const maxWords = 1000
+
 	for _, match := range found {
 		precedingContent := content[index:match[0]]
 
@@ -40,6 +42,12 @@ func NumberedCaseConverter(content string) string {
 		count, err := strconv.Atoi(numStr)
 		if err != nil {
 			fmt.Println("Error: Could not convert the string to a number.")
+			return content
+		}
+
+		if count > maxWords {
+			fmt.Printf("Error: The number of words to modify (%d) exceeds the limit of %d. \n", count, maxWords)
+			result.WriteString(content)
 			return content
 		}
 

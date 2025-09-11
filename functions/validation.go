@@ -1,0 +1,45 @@
+package functions
+
+import (
+	"fmt"
+	"os"
+	"regexp"
+	"strings"
+	"unicode"
+)
+
+func CheckAsciiAndPrintables(content string) bool {
+	content = strings.ReplaceAll(content, "\n", " ")
+	content = strings.ReplaceAll(content, "\t", " ")
+
+	expression, err := regexp.Compile(`\s+`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return false
+	}
+	content = expression.ReplaceAllString(content, " ")
+
+	for _, r := range content {
+		if r > unicode.MaxASCII || !unicode.IsPrint(r) {
+			return false
+		}
+	}
+	return true
+}
+
+func CheckFileSize(filePath string) bool {
+	const maxSize int64 = 1048576
+
+	fileInfo, err := os.Stat(filePath)
+	if err != nil {
+		fmt.Println("Error: Could not get file information")
+		return false
+	}
+
+	if fileInfo.Size() > maxSize {
+		fmt.Println("Error: The file size exceeds the maximum limit of 1MB")
+		return false
+	}
+
+	return true
+}
