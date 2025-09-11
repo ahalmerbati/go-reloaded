@@ -9,7 +9,7 @@ import (
 func Quotation(content string) string {
 	expression, err := regexp.Compile(`'`)
 	if err != nil {
-		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
+		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
@@ -19,12 +19,11 @@ func Quotation(content string) string {
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
-		fmt.Println("No instances of ' were found in the content. The original content is returned:")
 		return content
 	}
 
 	if len(found)%2 != 0 {
-		fmt.Println("Odd number of quotation marks found. The original content is returned:")
+		fmt.Println("Error: Odd number of quotation marks found.")
 		return content
 	}
 

@@ -10,7 +10,7 @@ import (
 func ToDec(content, pattern string, base int) string {
 	expression, err := regexp.Compile(pattern)
 	if err != nil {
-		fmt.Println("The regex pattern is invalid. The original content is returned.")
+		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
@@ -19,7 +19,6 @@ func ToDec(content, pattern string, base int) string {
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
-		fmt.Println("No instances of '(hex)' or '(bin)' found in the content. The original content is returned:")
 		return content
 	}
 
@@ -46,9 +45,9 @@ func ToDec(content, pattern string, base int) string {
 }
 
 func HexToDec(content string) string {
-	return ToDec(content, `(\b[0-9a-fA-F]+\b)\s*\(hex\)`, 16)
+	return ToDec(content, `(\b[0-9a-fA-F]+\b)[\s.,!?:;]*\(hex\)`, 16)
 }
 
 func BinToDec(content string) string {
-	return ToDec(content, `(\b[01]+\b)\s*\(bin\)`, 2)
+	return ToDec(content, `(\b[01]+\b)[\s.,!?:;]*\(bin\)`, 2)
 }

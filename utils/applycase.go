@@ -6,7 +6,6 @@ import (
 
 func ApplyNumCase(words []string, caseType string, count int) []string {
 	wordsAfter := make([]string, len(words))
-	copy(wordsAfter, words)
 
 	i := len(words) - count
 	if i < 0 {
@@ -24,4 +23,19 @@ func ApplyNumCase(words []string, caseType string, count int) []string {
 		}
 	}
 	return wordsAfter
+}
+
+func ApplySingleCase(word string, caseType string) string {
+	var convertedWord string
+
+	switch caseType {
+	case "up":
+		convertedWord = strings.ToUpper(word)
+	case "low":
+		convertedWord = strings.ToLower(word)
+	case "cap":
+		convertedWord = Capitalize(word)
+	}
+
+	return convertedWord
 }

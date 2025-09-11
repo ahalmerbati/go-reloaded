@@ -11,7 +11,7 @@ import (
 func NumberedCaseConverter(content string) string {
 	expression, err := regexp.Compile(`[\s.,!?:;]*\((up|low|cap),\s*(\d+)\)`)
 	if err != nil {
-		fmt.Println("There was an error compiling the regular expression. The original content is returned:")
+		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
@@ -21,7 +21,6 @@ func NumberedCaseConverter(content string) string {
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
-		fmt.Println("No instances of '(up)', '(low)', or '(cap)' found in the content. The original content is returned:")
 		return content
 	}
 
@@ -30,7 +29,7 @@ func NumberedCaseConverter(content string) string {
 
 		expression2, err := regexp.Compile(`(\b[a-zA-Z0-9]+\b)`)
 		if err != nil {
-			fmt.Println("There was an error compiling the regular expression. The original content is returned:")
+			fmt.Println("Error: Could not compile the regular expression.")
 			return content
 		}
 		words := expression2.FindAllString(precedingContent, -1)
@@ -40,12 +39,12 @@ func NumberedCaseConverter(content string) string {
 
 		count, err := strconv.Atoi(numStr)
 		if err != nil {
-			fmt.Println("Error converting string to a number. The original content is returned:")
+			fmt.Println("Error: Could not convert the string to a number.")
 			return content
 		}
 
 		if count == 0 {
-			fmt.Println("The number of words to modifiy cannot be 0. The original content is returned:")
+			fmt.Println("Error: The number of words to modifiy cannot be 0.")
 			return content
 		}
 

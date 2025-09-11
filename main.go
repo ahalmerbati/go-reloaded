@@ -4,20 +4,26 @@ import (
 	"fmt"
 	"go-reloaded/functions"
 	"os"
+	"strings"
 )
 
 func main() {
 	if len(os.Args) != 3 {
-		fmt.Println("invalid length of arguments")
+		fmt.Println("Error: Invalid length of arguments")
 		return
 	}
 
 	sampleFile := os.Args[1]
 	resultFile := os.Args[2]
 
+	if !strings.HasSuffix(sampleFile, ".txt") || !strings.HasSuffix(resultFile, ".txt") {
+		fmt.Println("Error: The file to be read from and the file to be written to have to both be a txt file")
+		return
+	}
+
 	content, err := os.ReadFile(sampleFile)
 	if err != nil {
-		fmt.Println("Error reading file")
+		fmt.Println("Error: Could not read file")
 		return
 	}
 
@@ -25,10 +31,13 @@ func main() {
 
 	err = os.WriteFile(resultFile, []byte(finalContent), 0644)
 	if err != nil {
-		fmt.Println("Error writing to file")
+		fmt.Println("Error: Could not write into file")
 		return
 	}
 
 	fmt.Println("Successfully proccessed sample.txt and wrote the output to result.txt")
 }
-// Ask Ridha where to do the if statment for if its non-ascii characters / non-printables also if its too large a number for up
+
+// if its non-ascii characters/nonprintables
+//if its too large a number for commands
+// if theres a (  so like hello )(low)( it should remove the bracket

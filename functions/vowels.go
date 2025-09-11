@@ -9,7 +9,7 @@ import (
 func Vowels(content string) string {
 	expression, err := regexp.Compile(`\b([aA])\b\s+([aAeEiIoOuUhH])`)
 	if err != nil {
-		fmt.Println("the regex pattern is invalid. the original content is returned.")
+		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
@@ -18,7 +18,6 @@ func Vowels(content string) string {
 	found := expression.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
-		fmt.Println("No instances of the letter a followed by a word starting with a vowel or h found in the content. The original content is returned:")
 		return content
 	}
 
