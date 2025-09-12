@@ -7,6 +7,7 @@ import (
 // The function applies a specified case conversion to the last (count) words in a slice of strings
 func ApplyNumCase(words []string, caseType string, count int) []string {
 	wordsAfter := make([]string, len(words))
+	copy(wordsAfter, words)
 
 	i := len(words) - count
 	if i < 0 {

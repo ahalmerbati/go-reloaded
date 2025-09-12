@@ -17,7 +17,7 @@ func ReplaceLastWords(content string, newWords []string, count int) string {
 	wordsFound := expressionWord.FindAllStringIndex(content, -1)
 
 	if len(wordsFound) == 0 || len(wordsFound) < count {
-		fmt.Print("Error: Not enough words were found to apply the case conversion.")
+		fmt.Println("Error: Not enough words were found to apply the case conversion.")
 		return content
 	}
 

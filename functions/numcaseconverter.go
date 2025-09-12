@@ -26,9 +26,22 @@ func NumberedCaseConverter(content string) string {
 	}
 
 	const maxWords = 1000
+	flag := false
 
-	for _, match := range found {
+	for i, match := range found {
 		precedingContent := content[index:match[0]]
+
+		if i > 0 && strings.TrimSpace(content[found[i-1][1]:match[0]]) == "" {
+			if !flag {
+				fmt.Println("Error: Found multiple commands following a single word. Only the first command will be applied.")
+				flag = true
+			}
+			result.WriteString(content[match[0]:match[1]])
+			index = match[1]
+			continue
+		} else {
+			flag = false
+		}
 
 		expression2, err := regexp.Compile(`(\b[a-zA-Z0-9]+\b)`)
 		if err != nil {
@@ -43,18 +56,34 @@ func NumberedCaseConverter(content string) string {
 		count, err := strconv.Atoi(numStr)
 		if err != nil {
 			fmt.Println("Error: Could not convert the string to a number.")
-			return content
+			result.WriteString(precedingContent)
+			result.WriteString(content[match[0]:match[1]])
+			index = match[1]
+			continue
 		}
 
 		if count > maxWords {
 			fmt.Printf("Error: The number of words to modify (%d) exceeds the limit of %d. \n", count, maxWords)
-			result.WriteString(content)
-			return content
+			result.WriteString(precedingContent)
+			result.WriteString(content[match[0]:match[1]])
+			index = match[1]
+			continue
 		}
 
 		if count == 0 {
 			fmt.Println("Error: The number of words to modifiy cannot be 0.")
-			return content
+			result.WriteString(precedingContent)
+			result.WriteString(content[match[0]:match[1]])
+			index = match[1]
+			continue
+		}
+
+		if len(words) < count {
+			fmt.Println("Error: Not enough words were found to apply the case conversion.")
+			result.WriteString(precedingContent)
+			result.WriteString(content[match[0]:match[1]])
+			index = match[1]
+			continue
 		}
 
 		modifiedWords := utils.ApplyNumCase(words, caseType, count)
