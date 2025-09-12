@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// The function converts hexadecimal and binary numbers within a string to their decimal equivalents
 func ToDec(content string) string {
 	multiCommandExpression, err := regexp.Compile(`\s*\((hex|bin)\)(\s*\((hex|bin)\)){1,}`)
 	if err != nil {

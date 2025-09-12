@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// The function standardizes the spacing of punctuation marks within a string
 func Punctuation(content string) string {
 	expression1, err := regexp.Compile(`\s*([.,!?:;]+)`)
 	if err != nil {

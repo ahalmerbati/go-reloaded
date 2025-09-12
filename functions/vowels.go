@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// The function replaces any instance of "a" with "an" when it is followed by a word that starts with a vowel or 'h'
 func Vowels(content string) string {
 	expression, err := regexp.Compile(`\b([aA])\b\s+([aAeEiIoOuUhH])`)
 	if err != nil {

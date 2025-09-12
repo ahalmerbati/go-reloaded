@@ -8,6 +8,7 @@ import (
 	"unicode"
 )
 
+// The function verifies that a given string contains only ASCII and printable characters
 func CheckAsciiAndPrintables(content string) bool {
 	content = strings.ReplaceAll(content, "\n", " ")
 	content = strings.ReplaceAll(content, "\t", " ")
@@ -27,6 +28,7 @@ func CheckAsciiAndPrintables(content string) bool {
 	return true
 }
 
+// The function verifies if the file is within the maximum size limit of 1MB
 func CheckFileSize(filePath string) bool {
 	const maxSize int64 = 1048576
 

@@ -2,6 +2,7 @@ package functions
 
 import "strings"
 
+// The function is used for processing text by applying a series of transformations to the input string 
 func ProcessText(content string) string {
 	content = ToDec(content)
 	content = NumberedCaseConverter(content)

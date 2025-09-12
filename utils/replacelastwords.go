@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// The function is called to replace the last (count) words in a string with the words from the newWords slice
 func ReplaceLastWords(content string, newWords []string, count int) string {
 	expressionWord, err := regexp.Compile(`(\b[a-zA-Z0-9]+\b)`)
 	if err != nil {

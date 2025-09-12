@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// The function finds specific commands in a string and applies case conversion to the word immediately preceding the command
 func CaseConverter(content string) string {
 	multiCommandExpression, err := regexp.Compile(`\s*\((up|low|cap)\)(\s*\((up|low|cap)\)){1,}`)
 	if err != nil {

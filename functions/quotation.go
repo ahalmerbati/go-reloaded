@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// The function processes a string to modify text enclosed within single quotation marks
 func Quotation(content string) string {
 	expression, err := regexp.Compile(`'`)
 	if err != nil {

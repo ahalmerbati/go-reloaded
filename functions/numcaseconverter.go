@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// The function finds specific commands in a string and applies case conversion to a given number of preceding words
 func NumberedCaseConverter(content string) string {
 	expression, err := regexp.Compile(`[\s.,!?:;]*\((up|low|cap),\s*(\d+)\)`)
 	if err != nil {

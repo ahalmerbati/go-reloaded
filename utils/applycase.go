@@ -4,6 +4,7 @@ import (
 	"strings"
 )
 
+// The function applies a specified case conversion to the last (count) words in a slice of strings
 func ApplyNumCase(words []string, caseType string, count int) []string {
 	wordsAfter := make([]string, len(words))
 
@@ -25,6 +26,7 @@ func ApplyNumCase(words []string, caseType string, count int) []string {
 	return wordsAfter
 }
 
+// The function applies a specificed case converstion to a single word
 func ApplySingleCase(word string, caseType string) string {
 	var convertedWord string
 
