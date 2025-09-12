@@ -18,7 +18,7 @@ func ToDec(content string) string {
 		fmt.Println("Found multiple commands following a single number. Only the first command will be applied.")
 	}
 
-	expression, err := regexp.Compile(`(\b(?:[0-9a-fA-F]+|[01]+)\b)[\s.,!?:;]*\((hex|bin)\)`)
+	expression, err := regexp.Compile(`(\b(?:[0-9a-zA-Z]+|[01]+)\b)([\s.,!?:;]*)\((hex|bin)\)`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
@@ -36,7 +36,8 @@ func ToDec(content string) string {
 		result.WriteString(content[index:match[0]])
 
 		oldNum := content[match[2]:match[3]]
-		command := content[match[4]:match[5]]
+		punctuation := content[match[4]:match[5]]
+		command := content[match[6]:match[7]]
 
 		var base int
 		switch command {
@@ -48,9 +49,12 @@ func ToDec(content string) string {
 
 		decNum, err := strconv.ParseInt(oldNum, base, 64)
 		if err != nil {
-			result.WriteString(content[match[0]:match[1]])
+			fmt.Printf("Error: Could not convert %s to a decimal number.\n", oldNum)
+			result.WriteString(oldNum)
+			result.WriteString(punctuation)
 		} else {
 			result.WriteString(fmt.Sprintf("%d", decNum))
+			result.WriteString(punctuation)
 		}
 		index = match[1]
 	}

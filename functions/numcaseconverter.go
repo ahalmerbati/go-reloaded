@@ -10,16 +10,26 @@ import (
 
 // The function finds specific commands in a string and applies case conversion to a given number of preceding words
 func NumberedCaseConverter(content string) string {
-	expression, err := regexp.Compile(`[\s.,!?:;]*\((up|low|cap),\s*(-?\d+)\)`)
+	validCmd, err := regexp.Compile(`(?i)([\s.,!?:;]*)\((up|low|cap),\s*(-?\d+)\)`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
+	invalidCmd, err := regexp.Compile(`\(\s*\(+\s*(up|low|cap)\s*,\s*-?\d+\s*\)+\s*\)|\)\s*\((up|low|cap),\s*-?\d+\)\(`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return content
+	}
+
+	if invalidCmd.MatchString(content) {
+		fmt.Println("Error: The command format is invalid. Command must be in the format (up, <number>), (low, <number>), or (cap, <number>) with no extra parentheses.")
+		return content
+	}
+
 	var result strings.Builder
 	index := 0
-
-	found := expression.FindAllStringSubmatchIndex(content, -1)
+	found := validCmd.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
 		return content
@@ -50,8 +60,9 @@ func NumberedCaseConverter(content string) string {
 		}
 		words := expression2.FindAllString(precedingContent, -1)
 
-		caseType := content[match[2]:match[3]]
-		numStr := content[match[4]:match[5]]
+		punctuation := content[match[2]:match[3]]
+		caseType := content[match[4]:match[5]]
+		numStr := content[match[6]:match[7]]
 
 		count, err := strconv.Atoi(numStr)
 		if err != nil {
@@ -63,7 +74,7 @@ func NumberedCaseConverter(content string) string {
 		}
 
 		if count > maxWords {
-			fmt.Printf("Error: The number of words to modify (%d) exceeds the limit of %d. \n", count, maxWords)
+			fmt.Printf("Error: The number of words to modify (%d) exceeds the limit of %d.\n", count, maxWords)
 			result.WriteString(precedingContent)
 			result.WriteString(content[match[0]:match[1]])
 			index = match[1]
@@ -71,7 +82,7 @@ func NumberedCaseConverter(content string) string {
 		}
 
 		if count <= 0 {
-			fmt.Println("Error: The number of words to modifiy cannot be equal to or less than 0.")
+			fmt.Println("Error: The number of words to modify cannot be equal to or less than 0.")
 			result.WriteString(precedingContent)
 			result.WriteString(content[match[0]:match[1]])
 			index = match[1]
@@ -87,14 +98,12 @@ func NumberedCaseConverter(content string) string {
 		}
 
 		modifiedWords := utils.ApplyNumCase(words, caseType, count)
-
 		modifiedContent := utils.ReplaceLastWords(precedingContent, modifiedWords, count)
 
 		result.WriteString(modifiedContent)
-
+		result.WriteString(punctuation)
 		index = match[1]
 	}
 	result.WriteString(content[index:])
-
 	return result.String()
 }
