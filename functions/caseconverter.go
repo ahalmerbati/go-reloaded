@@ -9,7 +9,8 @@ import (
 
 // The function finds specific commands in a string and applies case conversion to the word immediately preceding the command
 func CaseConverter(content string) string {
-	validCmd, err := regexp.Compile(`(?i)(\b[a-zA-Z]+\b)([\s.,!?:;]*)\((up|low|cap)\)`)
+	validCmd, err := regexp.Compile(`(?i)(\b[a-zA-Z]+\b)([.,!?:;]*)\s*\((up|low|cap)\)`)
+
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content

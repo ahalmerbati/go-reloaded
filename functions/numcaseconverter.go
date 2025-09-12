@@ -10,7 +10,7 @@ import (
 
 // The function finds specific commands in a string and applies case conversion to a given number of preceding words
 func NumberedCaseConverter(content string) string {
-	validCmd, err := regexp.Compile(`(?i)([\s.,!?:;]*)\((up|low|cap),\s*(-?\d+)\)`)
+	validCmd, err := regexp.Compile(`(?i)([.,!?:;]*)\s*\((up|low|cap),\s*(-?\d+)\)`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
