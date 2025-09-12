@@ -9,6 +9,12 @@ import (
 
 // The function finds specific commands in a string and applies case conversion to the word immediately preceding the command
 func CaseConverter(content string) string {
+	validCmd, err := regexp.Compile(`(?i)(\b[a-zA-Z]+\b)([\s.,!?:;]*)\((up|low|cap)\)`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return content
+	}
+
 	multiCommandExpression, err := regexp.Compile(`\s*\((up|low|cap)\)(\s*\((up|low|cap)\)){1,}`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
@@ -16,12 +22,6 @@ func CaseConverter(content string) string {
 	}
 	if multiCommandExpression.MatchString(content) {
 		fmt.Println("Error: Found multiple commands following a single word. Only the first command will be applied.")
-	}
-
-	validCmd, err := regexp.Compile(`(?i)(\b[a-zA-Z]+\b)([\s.,!?:;]*)\((up|low|cap)\)`)
-	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
-		return content
 	}
 
 	invalidCmd, err := regexp.Compile(`\(\s*\(+\s*(up|low|cap)\s*\)+\s*\)|\)\s*\((up|low|cap)\)\(`)

@@ -9,6 +9,12 @@ import (
 
 // The function converts hexadecimal and binary numbers within a string to their decimal equivalents
 func ToDec(content string) string {
+	validCmd, err := regexp.Compile(`(\b(?:[0-9a-zA-Z]+|[01]+)\b)([\s.,!?:;]*)\((hex|bin)\)`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return content
+	}
+
 	multiCommandExpression, err := regexp.Compile(`\s*\((hex|bin)\)(\s*\((hex|bin)\)){1,}`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
@@ -18,15 +24,20 @@ func ToDec(content string) string {
 		fmt.Println("Found multiple commands following a single number. Only the first command will be applied.")
 	}
 
-	expression, err := regexp.Compile(`(\b(?:[0-9a-zA-Z]+|[01]+)\b)([\s.,!?:;]*)\((hex|bin)\)`)
+	invalidCmd, err := regexp.Compile(`\(\s*\(+\s*(bin|hex)\s*\)+\s*\)|\)+\s*\((bin|hex)\)\)+|\(\s*(bin|hex)\s*\)+`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
 	}
 
+	if invalidCmd.MatchString(content) {
+		fmt.Println("Error: The command format is invalid. Command must be in the format (hex) or (bin) with no extra parentheses.")
+		return content
+	}
+
 	var result strings.Builder
 	index := 0
-	found := expression.FindAllStringSubmatchIndex(content, -1)
+	found := validCmd.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
 		return content
