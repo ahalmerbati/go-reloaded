@@ -1,1 +1,1 @@
-100 ((())))(bin)))
+Punctuation tests are ... kinda boring ,what do you think ?
