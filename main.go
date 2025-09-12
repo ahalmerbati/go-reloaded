@@ -36,6 +36,11 @@ func main() {
 		return
 	}
 
+	if sampleFile == resultFile {
+		fmt.Println("The input file cannot be the same as the output file")
+		return
+	}
+
 	finalContent := functions.ProcessText(string(content))
 
 	err = os.WriteFile(resultFile, []byte(finalContent), 0644)

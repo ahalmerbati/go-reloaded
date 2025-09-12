@@ -2,6 +2,7 @@ package functions
 
 import (
 	"fmt"
+	"go-reloaded/utils"
 	"regexp"
 	"strings"
 )
@@ -14,32 +15,38 @@ func Quotation(content string) string {
 		return content
 	}
 
-	var result strings.Builder
-	index := 0
+	var quotationPosition []int
+	found := expression.FindAllStringIndex(content, -1)
+	for _, match := range found {
+		i := match[0]
+		if !utils.IsApostrophe(content, i) {
+			quotationPosition = append(quotationPosition, i)
+		}
+	}
 
-	found := expression.FindAllStringSubmatchIndex(content, -1)
-
-	if len(found) == 0 {
+	if len(quotationPosition) == 0 {
 		return content
 	}
 
-	if len(found)%2 != 0 {
+	if len(quotationPosition)%2 != 0 {
 		fmt.Println("Error: Odd number of quotation marks found.")
 		return content
 	}
 
-	for i := 0; i < len(found); i = i + 2 {
-		firstQuote := found[i][0]
-		secondQuote := found[i+1][0]
+	var result strings.Builder
+	index := 0
+
+	for i := 0; i < len(quotationPosition); i = i + 2 {
+		firstQuote := quotationPosition[i]
+		secondQuote := quotationPosition[i+1]
 
 		result.WriteString(content[index:firstQuote])
-		result.WriteString(string(content[firstQuote]))
+		result.WriteString("'")
 
 		contentBetweenQuotes := strings.TrimSpace(content[firstQuote+1 : secondQuote])
 
 		result.WriteString(contentBetweenQuotes)
-
-		result.WriteString(string(content[secondQuote]))
+		result.WriteString("'")
 
 		if secondQuote+1 < len(content) && content[secondQuote+1] != ' ' {
 			result.WriteString(" ")
