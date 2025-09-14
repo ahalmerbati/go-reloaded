@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	sampleFile := os.Args[1]
-	resultFile := os.Args[2]
-
 	if len(os.Args) != 3 {
 		fmt.Println("Error: Invalid length of arguments")
 		return
 	}
+
+	sampleFile := os.Args[1]
+	resultFile := os.Args[2]
 
 	if !strings.HasSuffix(sampleFile, ".txt") || !strings.HasSuffix(resultFile, ".txt") {
 		fmt.Println("Error: The file to be read from and the file to be written to have to both be a txt file")
