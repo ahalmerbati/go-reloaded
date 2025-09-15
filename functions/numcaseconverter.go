@@ -16,17 +16,6 @@ func NumberedCaseConverter(content string) string {
 		return content
 	}
 
-	invalidCmd, err := regexp.Compile(`\(\s*\(+\s*(up|low|cap)\s*,\s*-?\d+\s*\)+\s*\)|\)\s*\((up|low|cap),\s*-?\d+\)\(`)
-	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
-		return content
-	}
-
-	if invalidCmd.MatchString(content) {
-		fmt.Println("Error: The command format is invalid. Command must be in the format (up, <number>), (low, <number>), or (cap, <number>) with no extra parentheses.")
-		return content
-	}
-
 	var result strings.Builder
 	index := 0
 	found := validCmd.FindAllStringSubmatchIndex(content, -1)

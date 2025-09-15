@@ -7,14 +7,10 @@ import (
 	"strings"
 )
 
-func CaseConverter(content string) string {
-	singleCase, err := regexp.Compile(`(?i)(\b[a-zA-Z0-9]+\b)([.,!?:;]*)\s*\((up|low|cap)\)`)
-	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
-		return content
-	}
+// The function finds specific commands in a string and applies case conversion to the word immediately preceding the command
+func SingleCaseConverter(content string) string {
+	validCmd, err := regexp.Compile(`(?i)(\b[a-zA-Z0-9]+\b)([.,!?:;]*)\s*\((up|low|cap)\)`)
 
-	numberedCase, err := regexp.Compile(``)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
@@ -22,8 +18,7 @@ func CaseConverter(content string) string {
 
 	var result strings.Builder
 	index := 0
-	found := singleCase.FindAllStringSubmatchIndex(content, -1)
-	found2 := numberedCase.FindAllStringSubmatchIndex(content, -1)
+	found := validCmd.FindAllStringSubmatchIndex(content, -1)
 
 	if len(found) == 0 {
 		return content

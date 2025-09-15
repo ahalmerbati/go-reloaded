@@ -30,7 +30,7 @@ func CheckAsciiAndPrintables(content string) bool {
 
 // The function verifies if the file is within the maximum size limit of 1MB
 func CheckFileSize(filePath string) bool {
-	const maxSize int64 = 1048576
+	const maxSize int64 = 102400 // 100KB
 
 	fileInfo, err := os.Stat(filePath)
 	if err != nil {
@@ -39,7 +39,7 @@ func CheckFileSize(filePath string) bool {
 	}
 
 	if fileInfo.Size() > maxSize {
-		fmt.Println("Error: The file size exceeds the maximum limit of 1MB")
+		fmt.Println("Error: The file size exceeds the maximum limit of 100KB")
 		return false
 	}
 

@@ -1,13 +1,15 @@
 package functions
 
-import "strings"
+import (
+	"strings"
+)
 
 // The function is used for processing text by applying a series of transformations to the input string
 func ProcessText(content string) string {
 	content = ToDec(content)
 	content = Vowels(content)
 	content = NumberedCaseConverter(content)
-	content = CaseConverter(content)
+	content = SingleCaseConverter(content)
 	content = Punctuation(content)
 	content = Quotation(content)
 

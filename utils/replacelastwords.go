@@ -27,7 +27,7 @@ func ReplaceLastWords(content string, newWords []string, count int) string {
 	var result strings.Builder
 	result.WriteString(content[:startIndex])
 
-	result.WriteString(strings.Join(newWords[len(newWords)-count:], " "))
+	result.WriteString(strings.Join(newWords, " "))
 
 	result.WriteString(content[endIndex:])
 

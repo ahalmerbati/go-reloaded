@@ -21,6 +21,16 @@ func main() {
 		return
 	}
 
+	if sampleFile == resultFile {
+		fmt.Println("The input file cannot be the same as the output file")
+		return
+	}
+
+	if !functions.CheckFileSize(sampleFile) {
+		fmt.Println("Error: The file size exceeds the maximum limit of 100KB")
+		return
+	}
+
 	content, err := os.ReadFile(sampleFile)
 	if err != nil {
 		fmt.Println("Error: Could not read file")
@@ -29,15 +39,6 @@ func main() {
 
 	if !functions.CheckAsciiAndPrintables(string(content)) {
 		fmt.Println("Error: Cannot process content as it contains non-ASCII or non-printable characters.")
-		return
-	}
-
-	if !functions.CheckFileSize(sampleFile) {
-		return
-	}
-
-	if sampleFile == resultFile {
-		fmt.Println("The input file cannot be the same as the output file")
 		return
 	}
 
@@ -51,5 +52,3 @@ func main() {
 
 	fmt.Println("Successfully proccessed sample.txt and wrote the output to result.txt")
 }
-
-// if theres a (  so like hello )(low)( it should remove the bracket
