@@ -8,8 +8,9 @@ import (
 func ProcessText(content string) string {
 	content = ToDec(content)
 	content = Vowels(content)
-	content = NumberedCaseConverter(content)
-	content = SingleCaseConverter(content)
+	content = CaseConverter(content)
+	// content = NumberedCaseConverter(content)
+	// content = SingleCaseConverter(content)
 	content = Punctuation(content)
 	content = Quotation(content)
 
