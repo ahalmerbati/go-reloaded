@@ -2,19 +2,16 @@ package functions
 
 import (
 	"fmt"
-	"go-reloaded/utils"
 	"regexp"
 	"strings"
 )
 
 func CaseConverter(content string) string {
-	singleCase, err := regexp.Compile(`(?i)(\b[a-zA-Z0-9]+\b)([.,!?:;]*)\s*\((up|low|cap)\)`)
-	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
+	if !ErrorHandling(content) {
 		return content
 	}
 
-	numberedCase, err := regexp.Compile(``)
+	caseCmd, err := regexp.Compile(`((\b[a-zA-Z0-9']+\b(\s*['.,!?:;]\s*)){1,})\s*\((up|low|cap)\s*,?\s*(\d+)?\)`)
 	if err != nil {
 		fmt.Println("Error: Could not compile the regular expression.")
 		return content
@@ -22,38 +19,17 @@ func CaseConverter(content string) string {
 
 	var result strings.Builder
 	index := 0
-	found := singleCase.FindAllStringSubmatchIndex(content, -1)
-	found2 := numberedCase.FindAllStringSubmatchIndex(content, -1)
+
+	found := caseCmd.FindAllStringSubmatchIndex(content, -1)
+	
 
 	if len(found) == 0 {
 		return content
 	}
 
-	if !ErrorHandling(content) {
-		return content
-	}
-
 	for _, match := range found {
-		result.WriteString(content[index:match[0]])
-
-		word := content[match[2]:match[3]]
-		punctuation := content[match[4]:match[5]]
-		caseType := content[match[6]:match[7]]
-
-		if caseType != "up" && caseType != "low" && caseType != "cap" {
-			fmt.Println("Error: Command must be lowercase and one of (up, low, cap).")
-			result.WriteString(word + punctuation)
-			index = match[1]
-			continue
-		}
-
-		convertedWord := utils.ApplySingleCase(word, caseType)
-
-		result.WriteString(convertedWord + punctuation)
-
-		index = match[1]
+		
 	}
-	result.WriteString(content[index:])
 
-	return result.String()
+
 }

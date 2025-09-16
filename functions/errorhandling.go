@@ -3,6 +3,7 @@ package functions
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 )
 
 func ErrorHandling(content string) bool {
@@ -36,6 +37,25 @@ func ErrorHandling(content string) bool {
 	if invalidCmdNumbered.MatchString(content) {
 		fmt.Println("Error: The command format is invalid. Command must be in the format (up, <number>), (low, <number>), or (cap, <number>) with no extra parentheses.")
 		return false
+	}
+
+	invalidCmdNumbered2, err := regexp.Compile(`\((up|low|cap),\s*(-?\d+)\)`)
+	if err != nil {
+		fmt.Println("Error: Could not compile the regular expression.")
+		return false
+	}
+
+	found := invalidCmdNumbered2.FindAllStringSubmatch(content, -1)
+	for _, match := range found {
+		number, err := strconv.Atoi(match[2])
+		if err != nil {
+			fmt.Println("Error: Invalid number format in command.")
+			return false
+		}
+		if number <= 0 {
+			fmt.Println("Error: The number in the command must be a positive integer.")
+			return false
+		}
 	}
 
 	return true
