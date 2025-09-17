@@ -45,3 +45,14 @@ func CheckFileSize(filePath string) bool {
 
 	return true
 }
+
+func CheckCommand(command string) bool {
+	cmd := strings.Trim(command, "()")
+
+	for _, v := range cmd {
+		if !unicode.IsLetter(v) && !unicode.IsNumber(v) && v != ',' && v != ' ' && v != 10 {
+			return false
+		}
+	}
+	return true
+}
