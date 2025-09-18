@@ -9,9 +9,11 @@ func ProcessText(content string) string {
 	if !ErrorHandling(content) {
 		return content
 	}
-	
-	content = ToDec(content)
+
+	//content = CheckCaseConverterSpacing(content)
+
 	content = Vowels(content)
+	content = ToDec(content)
 	content = CaseConverter(content)
 	content = Punctuation(content)
 	content = Quotation(content)

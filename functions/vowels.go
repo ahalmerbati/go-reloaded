@@ -2,64 +2,30 @@ package functions
 
 import (
 	"strings"
-	"fmt"
 )
 
 func Vowels(content string) string {
-	
+	vowels := "aeiouhAEIOUH"
+	words := strings.Fields(content)
+	resultWords := make([]string, 0)
+
+	for i := 0; i < len(words); i++ {
+		if words[i] == "a" || words[i] == "A" || words[i] == "an" || words[i] == "An" {
+			if i+1 < len(words) && strings.ContainsAny(string(words[i+1][0]), vowels) {
+				if words[i] == "a" {
+					resultWords = append(resultWords, "an")
+				} else if words[i] == "A" {
+					resultWords = append(resultWords, "An")
+				} else if words[i] == "An" {
+					resultWords = append(resultWords, "A")
+				} else if words[i] == "an" {
+					resultWords = append(resultWords, "a")
+				}
+				continue
+			}
+		}
+		resultWords = append(resultWords, words[i])
+
+	}
+	return strings.Join(resultWords, " ")
 }
-
-
-
-
-
-
-
-
-
-
-// package functions
-
-// import (
-// 	"fmt"
-// 	"regexp"
-// 	"strings"
-// )
-
-// // The function replaces any instance of "a" with "an" when it is followed by a word that starts with a vowel or 'h'
-// func Vowels(content string) string {
-// 	expression, err := regexp.Compile(`\b([aA])\b((?:\s*\([a-z]+\))*)\s+([aAeEiIoOuUhH][a-zA-Z]*)`)
-// 	if err != nil {
-// 		fmt.Println("Error: Could not compile the regular expression.")
-// 		return content
-// 	}
-
-
-// 	var result strings.Builder
-// 	index := 0
-// 	found := expression.FindAllStringSubmatchIndex(content, -1)
-
-// 	if len(found) == 0 {
-// 		return content
-// 	}
-
-// 	for _, match := range found {
-// 		result.WriteString(content[index:match[0]])
-
-// 		letterA := content[match[2]:match[3]]
-// 		replacement := "an"
-
-// 		if letterA == "A" {
-// 			replacement = "An"
-// 		}
-
-// 		result.WriteString(replacement)
-// 		result.WriteString(content[match[3]:match[1]])
-
-// 		index = match[1]
-// 	}
-
-// 	result.WriteString(content[index:])
-
-// 	return result.String()
-// }

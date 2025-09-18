@@ -56,3 +56,7 @@ func CheckCommand(command string) bool {
 	}
 	return true
 }
+
+func CheckCaseConverterSpacing(content string) string {
+
+}
