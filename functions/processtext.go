@@ -6,11 +6,13 @@ import (
 
 // The function is used for processing text by applying a series of transformations to the input string
 func ProcessText(content string) string {
+	if !ErrorHandling(content) {
+		return content
+	}
+	
 	content = ToDec(content)
 	content = Vowels(content)
 	content = CaseConverter(content)
-	// content = NumberedCaseConverter(content)
-	// content = SingleCaseConverter(content)
 	content = Punctuation(content)
 	content = Quotation(content)
 

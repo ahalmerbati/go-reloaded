@@ -1,44 +1,45 @@
 package utils
 
 import (
+	"fmt"
 	"strings"
 )
 
 // The function applies a specified case conversion to the last (count) words in a slice of strings
-func ApplyNumCase(words []string, caseType string, count int) []string {
-	wordsAfter := make([]string, len(words))
-	copy(wordsAfter, words)
+func ApplyNumCase(words []string, caseType string, count int) {
 
-	i := len(words) - count
-	if i < 0 {
-		i = 0
+	startIndex := len(words) - count
+	if startIndex < 0 {
+		startIndex = 0
 	}
 
-	for j := i; j < len(wordsAfter); j++ {
+	for i := startIndex; i < len(words); i++ {
 		switch caseType {
 		case "up":
-			wordsAfter[j] = strings.ToUpper(wordsAfter[j])
+			words[i] = strings.ToUpper(words[i])
 		case "low":
-			wordsAfter[j] = strings.ToLower(wordsAfter[j])
+			words[i] = strings.ToLower(words[i])
 		case "cap":
-			wordsAfter[j] = Capitalize(wordsAfter[j])
+			words[i] = Capitalize(words[i])
 		}
 	}
-	return wordsAfter
 }
 
 // The function applies a specificed case converstion to a single word
-func ApplySingleCase(word string, caseType string) string {
-	var convertedWord string
+func ApplySingleCase(words []string, caseType string) {
+	if len(words) == 0 {
+		fmt.Println("Error: No word was found preceding the command. Cannot apply single case command.")
+		return
+	}
+
+	index := len(words) - 1
 
 	switch caseType {
 	case "up":
-		convertedWord = strings.ToUpper(word)
+		words[index] = strings.ToUpper(words[index])
 	case "low":
-		convertedWord = strings.ToLower(word)
+		words[index] = strings.ToLower(words[index])
 	case "cap":
-		convertedWord = Capitalize(word)
+		words[index] = Capitalize(words[index])
 	}
-
-	return convertedWord
 }

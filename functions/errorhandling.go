@@ -13,7 +13,7 @@ func ErrorHandling(content string) bool {
 		return false
 	}
 	if multiCommandSingle.MatchString(content) {
-		fmt.Println("Error: Found multiple commands following a single word. Only the first command will be applied.")
+		fmt.Println("Error: Found multiple commands following a single word. Only one command is allowed.")
 		return false
 	}
 
