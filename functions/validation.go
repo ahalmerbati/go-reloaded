@@ -28,7 +28,7 @@ func CheckAsciiAndPrintables(content string) bool {
 	return true
 }
 
-// The function verifies if the file is within the maximum size limit of 1MB
+// The function verifies if the file is within the maximum size limit of 100KB
 func CheckFileSize(filePath string) bool {
 	const maxSize int64 = 102400 // 100KB
 
@@ -58,5 +58,8 @@ func CheckCommand(command string) bool {
 }
 
 func CheckCaseConverterSpacing(content string) string {
+	arr := []rune(content)
+	var result strings.Builder
 
+	return result.String()
 }
