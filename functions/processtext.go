@@ -10,7 +10,7 @@ func ProcessText(content string) string {
 		return content
 	}
 
-	//content = CheckCaseConverterSpacing(content)
+	content = CheckCaseConverterSpacing(content)
 
 	content = Vowels(content)
 	content = ToDec(content)

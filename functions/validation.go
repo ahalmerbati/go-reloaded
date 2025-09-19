@@ -66,7 +66,16 @@ func CheckCaseConverterSpacing(content string) string {
 			result.WriteRune(arr[i])
 			continue
 		}
-		
+
+		for _, r := range arr[i:] {
+			if r == ')' {
+				result.WriteRune(')')
+				break
+			}
+			if r != ' ' {
+				result.WriteRune(r)
+			}
+		}
 	}
 
 	return result.String()
