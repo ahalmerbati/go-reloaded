@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func ErrorHandling(content string) bool {
@@ -54,6 +55,34 @@ func ErrorHandling(content string) bool {
 		}
 		if number <= 0 {
 			fmt.Println("Error: The number in the command must be a positive integer.")
+			return false
+		}
+	}
+
+	numberedCmds := regexp.MustCompile(`\((up|low|cap)\s*,\s*(\d+)\)`)
+	matches := numberedCmds.FindAllStringSubmatchIndex(content, -1)
+
+	for _, match := range matches {
+		commandStart := match[0]
+
+		numStr := content[match[4]:match[5]]
+		number, err := strconv.Atoi(numStr)
+		if err != nil {
+			fmt.Println("Error: Invalid number format in command.")
+			return false
+		}
+
+		precedingContent := content[:commandStart]
+		words := strings.Fields(precedingContent)
+		wordCount := len(words)
+
+		if number <= 0 {
+			fmt.Println("Error: The number in the command must be a positive integer.")
+			return false
+		}
+
+		if wordCount < number {
+			fmt.Printf("Error: Not enough words before the command '%s' to apply. Only found %d word(s) but command requires %d.\n", content[match[0]:match[1]], wordCount, number)
 			return false
 		}
 	}
