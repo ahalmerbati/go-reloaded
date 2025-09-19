@@ -8,7 +8,7 @@ import (
 	"unicode"
 )
 
-// The function verifies that a given string contains only ASCII and printable characters
+// The function verifies that a given string contains only ASCII and printable characters and replaces all tabs and new lines with a space
 func CheckAsciiAndPrintables(content string) bool {
 	content = strings.ReplaceAll(content, "\n", " ")
 	content = strings.ReplaceAll(content, "\t", " ")
@@ -57,6 +57,7 @@ func CheckCommand(command string) bool {
 	return true
 }
 
+// The function removes all spaces within the bracjets for the command such that ( cap,  4) would become (cap,4)
 func CheckCaseConverterSpacing(content string) string {
 	var result strings.Builder
 	var inParentheses bool
@@ -78,5 +79,24 @@ func CheckCaseConverterSpacing(content string) string {
 		result.WriteRune(r)
 	}
 
+	return result.String()
+}
+
+// The function checks whether there is a punctuation (.,;:!?) next to the parantheses and if so places a space between them
+func CheckASCIIBrackets(content string) string {
+	arr := []rune(content)
+	var result strings.Builder
+
+	for i := 0; i < len(arr); i++ {
+		if i != 0 && arr[i] == '(' && unicode.IsPrint(arr[i-1]) {
+			result.WriteRune(' ')
+		}
+
+		result.WriteRune(arr[i])
+
+		if i != len(arr)-1 && arr[i] == ')' && unicode.IsPrint(arr[i+1]) {
+			result.WriteRune(' ')
+		}
+	}
 	return result.String()
 }

@@ -3,31 +3,29 @@ package main
 import (
 	"fmt"
 	"go-reloaded/functions"
+	"log"
 	"os"
 	"strings"
 )
 
 func main() {
 	if len(os.Args) != 3 {
-		fmt.Println("Error: Invalid length of arguments")
-		return
+		log.Fatal("Error: Invalid length of arguments")
 	}
 
 	sampleFile := os.Args[1]
 	resultFile := os.Args[2]
 
 	if !strings.HasSuffix(sampleFile, ".txt") || !strings.HasSuffix(resultFile, ".txt") {
-		fmt.Println("Error: The file to be read from and the file to be written to have to both be a txt file")
-		return
+		log.Fatal("Error: The file to be read from and the file to be written to have to both be a txt file")
 	}
 
 	if sampleFile == resultFile {
-		fmt.Println("The input file cannot be the same as the output file")
-		return
+		log.Fatal("The input file cannot be the same as the output file")
 	}
 
 	if !functions.CheckFileSize(sampleFile) {
-		fmt.Println("Error: The file size exceeds the maximum limit of 100KB")
+		log.Fatal("Error: The file size exceeds the maximum limit of 100KB")
 		return
 	}
 

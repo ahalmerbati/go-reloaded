@@ -11,6 +11,7 @@ func ProcessText(content string) string {
 	}
 
 	content = CheckCaseConverterSpacing(content)
+	content = CheckASCIIBrackets(content)
 
 	content = Vowels(content)
 	content = ToDec(content)

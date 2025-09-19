@@ -57,6 +57,5 @@ func ErrorHandling(content string) bool {
 			return false
 		}
 	}
-
 	return true
 }
