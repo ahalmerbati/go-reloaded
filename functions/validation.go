@@ -58,24 +58,24 @@ func CheckCommand(command string) bool {
 }
 
 func CheckCaseConverterSpacing(content string) string {
-	arr := []rune(content)
 	var result strings.Builder
+	var inParentheses bool
 
-	for i := 0; i < len(arr); i++ {
-		if arr[i] != '(' {
-			result.WriteRune(arr[i])
+	for _, r := range content {
+		if r == '(' {
+			inParentheses = true
+			result.WriteRune(r)
 			continue
 		}
-
-		for _, r := range arr[i:] {
-			if r == ')' {
-				result.WriteRune(')')
-				break
-			}
-			if r != ' ' {
-				result.WriteRune(r)
-			}
+		if r == ')' {
+			inParentheses = false
+			result.WriteRune(r)
+			continue
 		}
+		if inParentheses && r == ' ' {
+			continue
+		}
+		result.WriteRune(r)
 	}
 
 	return result.String()
