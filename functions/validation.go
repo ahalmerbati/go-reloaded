@@ -2,11 +2,42 @@ package functions
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strings"
 	"unicode"
 )
+
+func ValidateInputFiles() {
+	if len(os.Args) != 3 {
+		log.Fatal("Error: Invalid length of arguments")
+	}
+
+	sampleFile := os.Args[1]
+	resultFile := os.Args[2]
+
+	if !strings.HasSuffix(sampleFile, ".txt") || !strings.HasSuffix(resultFile, ".txt") {
+		log.Fatal("Error: The file to be read from and the file to be written to have to both be a txt file")
+	}
+
+	if sampleFile == resultFile {
+		log.Fatal("The input file cannot be the same as the output file")
+	}
+
+	if !CheckFileSize(sampleFile) {
+		log.Fatal("Error: The file size exceeds the maximum limit of 100KB")
+	}
+
+	content, err := os.ReadFile(sampleFile)
+	if err != nil {
+		log.Fatal("Error: Could not read the file")
+	}
+
+	if !CheckAsciiAndPrintables(string(content)) {
+		log.Fatal("Error: Cannot process content as it contains non-ASCII or non-printable characters.")
+	}
+}
 
 // The function verifies that a given string contains only ASCII and printable characters and replaces all tabs and new lines with a space
 func CheckAsciiAndPrintables(content string) bool {
