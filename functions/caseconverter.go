@@ -15,7 +15,7 @@ func CaseConverter(content string) string {
 	for index < len(words) {
 		word := words[index]
 
-		if strings.HasPrefix(word, "(") && strings.HasSuffix(word, ")") && CheckCommand(word) {
+		if strings.HasPrefix(word, "(") && strings.HasSuffix(word, ")") && utils.CheckCommand(word) {
 			command := strings.Trim(word, "()")
 			if strings.Contains(command, ",") {
 				seg := strings.SplitN(command, ",", 2)

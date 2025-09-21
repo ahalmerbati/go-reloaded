@@ -1,6 +1,7 @@
 package functions
 
 import (
+	"go-reloaded/utils"
 	"strings"
 )
 
@@ -11,8 +12,8 @@ func ProcessText(content string) string {
 		return content
 	}
 
-	content = CheckCaseConverterSpacing(content)
-	content = CheckASCIIBrackets(content)
+	content = utils.CheckCaseConverterSpacing(content)
+	content = utils.CheckASCIIBrackets(content)
 
 	content = Vowels(content)
 	content = ToDec(content)

@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"go-reloaded/functions"
+	"go-reloaded/utils"
 	"log"
 	"os"
 )
 
 func main() {
-	functions.ValidateInputFiles()
+	utils.ValidateInputFiles()
 
 	sampleFile := os.Args[1]
 	resultFile := os.Args[2]
