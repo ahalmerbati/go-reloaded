@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"log"
 	"strings"
 )
 
@@ -28,8 +28,7 @@ func ApplyNumCase(words []string, caseType string, count int) {
 // The function applies a specificed case converstion to a single word
 func ApplySingleCase(words []string, caseType string) {
 	if len(words) == 0 {
-		fmt.Println("Error: No word was found preceding the command. Cannot apply single case command.")
-		return
+		log.Fatal("Error: No word was found preceding the command. Cannot apply single case command.")
 	}
 
 	index := len(words) - 1

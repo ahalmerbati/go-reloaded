@@ -2,6 +2,7 @@ package functions
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -46,8 +47,7 @@ func ToDec(content string) string {
 
 	checkCmd := regexp.MustCompile(`\s*\((hex|bin)\)`)
 	if checkCmd.MatchString(result.String()) {
-		fmt.Println("Error: The command format is invalid. Command must be in the format <number> (hex) or <number> (bin).")
-		return content
+		log.Fatal("Error: The command format is invalid. Command must be in the format <number> (hex) or <number> (bin).")
 	}
 
 	return result.String()

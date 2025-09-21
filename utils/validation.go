@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -46,8 +45,7 @@ func CheckAsciiAndPrintables(content string) bool {
 
 	expression, err := regexp.Compile(`\s+`)
 	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
-		return false
+		log.Fatal("Error: Could not compile the regular expression")
 	}
 	content = expression.ReplaceAllString(content, " ")
 
@@ -65,13 +63,11 @@ func CheckFileSize(filePath string) bool {
 
 	fileInfo, err := os.Stat(filePath)
 	if err != nil {
-		fmt.Println("Error: Could not get file information")
-		return false
+		log.Fatal("Error: Could not get file information")
 	}
 
 	if fileInfo.Size() > maxSize {
-		fmt.Println("Error: The file size exceeds the maximum limit of 100KB")
-		return false
+		log.Fatal("Error: The file size exceeds the maximum limit of 100KB")
 	}
 
 	return true

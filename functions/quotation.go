@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"fmt"
 	"go-reloaded/utils"
+	"log"
 	"regexp"
 	"strings"
 )
@@ -11,8 +11,7 @@ import (
 func Quotation(content string) string {
 	expression, err := regexp.Compile(`'`)
 	if err != nil {
-		fmt.Println("Error: Could not compile the regular expression.")
-		return content
+		log.Fatal("Error: Could not compile the regular expression.")
 	}
 
 	var quotationPosition []int
@@ -29,8 +28,7 @@ func Quotation(content string) string {
 	}
 
 	if len(quotationPosition)%2 != 0 {
-		fmt.Println("Error: Odd number of quotation marks found.")
-		return content
+		log.Fatal("Error: Odd number of quotation marks found.")
 	}
 
 	var result strings.Builder

@@ -1,8 +1,8 @@
 package functions
 
 import (
-	"fmt"
 	"go-reloaded/utils"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -26,11 +26,9 @@ func CaseConverter(content string) string {
 						num := int(num64)
 						utils.ApplyNumCase(result, commandToApply, num)
 					} else if num64 <= 0 {
-						fmt.Println("Error: For the command to apply the number has to be a positive integer.")
-						return content
-					} else if num64 >= 100 {
-						fmt.Println("Error: The number is too large. Pick any number greater than 0 and less than 100")
-						return content
+						log.Fatal("Error: For the command to apply the number has to be a positive integer.")
+					} else if num64 >= 1000 {
+						log.Fatal("Error: The number is too large. Pick any number greater than 0 and less than 1000")
 					}
 				}
 			} else {
