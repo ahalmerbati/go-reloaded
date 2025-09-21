@@ -17,6 +17,8 @@ func ProcessText(content string) string {
 	content = Vowels(content)
 	content = ToDec(content)
 	content = CaseConverter(content)
+	content = Punctuation(content)
+
 	content = Quotation(content)
 
 	content = strings.TrimSpace(content)
